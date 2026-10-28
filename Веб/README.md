@@ -2,7 +2,7 @@
 1. Установите Python
 2. Откройте терминал в папке проекта.
 3. Выполните:
-py -m pip install -r requirements.txt
+py -m pip install -r requirements.txt (((((а затем)))))))
 py app.py
 4. Откройте в браузере **http://127.0.0.1:5000**.
 5. Для остановки сервера нажмите **Ctrl+C** в терминале.
