@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MicroFlow Control</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <script defer src="/static/app.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="drop">◉</span><div><h1>MicroFlow Control</h1><p>Стенд для тестирования микрофлюидных картриджей</p></div></div>
+    <div class="top-actions"><span class="demo">ДЕМОРЕЖИМММ · Arduino не подключена</span><button class="danger" id="emergency">■ Остановить</button></div>
+  </header>
+
+  <main class="dashboard">
+    <section class="panel connection">
+      <h2>Подключение</h2>
+      <div class="status"><span class="dot"></span> Симулятор (без Arduino)</div>
+      <label>COM-порт <select disabled><option>COM3</option></select></label>
+      <label>Скорость соединения <select disabled><option>115200</option></select></label>
+      <p class="hint">Подключение к реальному устройству добавим позже.</p>
+      <hr>
+      <h2>Ограничения симулятора</h2>
+      <dl><dt>Мин. положение</dt><dd>0 мм</dd><dt>Макс. положение</dt><dd>10 мм</dd><dt>Макс. скорость</dt><dd>5 мм/с</dd></dl>
+    </section>
+
+    <section class="panel manual">
+      <h2>Ручное управление</h2>
+      <div class="subhead">Положение плунжера <strong id="positionReadout">0.00 мм</strong></div>
+      <input id="positionSlider" type="range" min="0" max="10" step="0.1" value="0">
+      <div class="scale"><span>0 мм</span><span>5 мм</span><span>10 мм</span></div>
+      <h3>Шаговое перемещение</h3>
+      <div class="step-buttons">
+        <button data-step="-1">−1 мм</button><button data-step="-0.1">−0.1 мм</button>
+        <button data-step="0.1">+0.1 мм</button><button data-step="1">+1 мм</button>
+      </div>
+      <p class="hint">Кнопки изменяют только виртуальное положение.</p>
+    </section>
+
+    <section class="panel camera">
+      <div class="panel-title"><h2>Камера / отслеживание капли</h2><span class="tag">Заглушка</span></div>
+      <div class="video">
+        <span class="video-label">Предпросмотр без видеопотока</span>
+        <div class="tube"><div class="liquid"><span class="bubble" id="bubble"></span></div></div>
+        <div class="ruler">0 ───── 10 ───── 20 ───── 30 мм</div>
+      </div>
+      <p class="hint">Позже сюда можно вывести кадры с камеры через OpenCV.</p>
+    </section>
+
+    <section class="panel program">
+      <h2>Программа движения</h2>
+      <p class="hint">Один цикл: нажатие → выдержка → отжатие.</p>
+      <div class="form-grid">
+        <label>Ход плунжера, мм <input id="travel" type="number" min="0.1" max="10" step="0.1" value="2"></label>
+        <label>Скорость, мм/с <input id="speed" type="number" min="0.1" max="5" step="0.1" value="1"></label>
+        <label>Выдержка, с <input id="hold" type="number" min="0" max="30" step="0.5" value="2"></label>
+        <label>Количество циклов <input id="cycles" type="number" min="1" max="50" step="1" value="5"></label>
+      </div>
+      <div class="buttons"><button class="primary" id="start">▶ Запустить</button><button id="stop">■ Стоп</button><button id="save">Сохранить</button><button id="load">Загрузить</button></div>
+    </section>
+
+    <section class="panel state">
+      <h2>Текущее состояние</h2>
+      <dl><dt>Режим</dt><dd id="mode">Ожидание</dd><dt>Положение</dt><dd id="pos">0.00 мм</dd><dt>Этап</dt><dd id="stage">—</dd><dt>Цикл</dt><dd id="cycle">0 / 0</dd><dt>Статус</dt><dd id="message">Готов к симуляции</dd></dl>
+      <h3>Журнал</h3>
+      <div class="log" id="log" aria-live="polite">Приложение открыто</div>
+    </section>
+
+    <section class="panel future">
+      <h2>Дополнительные функции</h2>
+      <div class="future-grid"><div><strong>Расчёт жидкости</strong><p>Добавим после согласования геометрии картриджа.</p></div><div><strong>Автокалибровка</strong><p>Потребуется камера и реальные измерения.</p></div><div><strong>Графики</strong><p>Позже будем строить по телеметрии и данным камеры.</p></div></div>
+    </section>
+  </main>
+</body>
+</html>
